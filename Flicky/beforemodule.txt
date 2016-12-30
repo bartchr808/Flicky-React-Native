@@ -1,0 +1,54 @@
+
+
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/**
+ * Sample React Native App
+ * https://github.com/facebook/react-native
+ * @flow
+ */
+import { Button, Card, Toolbar } from 'react-native-material-design';
+
+import React, { Component } from 'react';
+import {
+  AppRegistry,
+  StyleSheet,
+  Text,
+  View
+} from 'react-native';
+var ButtonModal  = require('react-native-button');
+var Modal   = require('react-native-modalbox');
+var Slider  = require('react-native-slider');
+var window  = require('Dimensions').get('window');
+
+export default class Flicky extends Component {
+  render() {
+    return (
+      <View style={styles.container}>
+        <Toolbar
+          leftElement="arrow-back"
+          centerElement="Title"
+          rightElement={<Text>You can put here whatever you want</Text>}
+        />
+         <Button style={styles.buttons} value="Sensitivity" onPress={()=> console.log("I pressed a flat button")} />
+         <Button style={styles.buttons} value="Direction Customization" onPress={()=> console.log("I pressed a flat button")} />
+      </View>
+    );
+  }
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingTop: 80,
+    backgroundColor: '#F5FCFF',
+    flexDirection: 'column'
+  },
+  buttons: {
+    flex: 1,
+    alignItems: 'center'
+  }
+});
+
+AppRegistry.registerComponent('Flicky', () => Flicky);
