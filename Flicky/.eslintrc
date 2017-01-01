@@ -1,0 +1,46 @@
+{
+  "parser": "babel-eslint",
+  "env": {
+    "node": true,
+    "browser": true
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".ios.js", ".android.js"]
+      }
+    }
+  },
+  "globals": {
+        "isNaN": false,
+  },
+  "extends": "airbnb",
+  "rules": {
+    "max-len": [1, 80, 2, {ignoreComments: false,
+      "ignoreRegExpLiterals": true,
+      "ignoreTemplateLiterals": true,
+      "ignorePattern": "(import.*from.\\'.*\\';)|([const|let|var].*=.require\\(.*\\);)"}],
+    "indent": [0],
+    "no-underscore-dangle": [0],
+    "no-unused-vars": [1, {"args": "none"}],
+    "no-console": [1, {allow: ["error", "info"]}],
+    "comma-dangle": [0, {
+        "arrays": "always",
+        "objects": "always-multiline",
+        "imports": "never",
+        "exports": "never",
+        "functions": "never",
+    }],
+    "no-plusplus": [0],
+
+    "import/prefer-default-export": [0],
+
+    "react/jsx-first-prop-new-line": [0],
+    "react/jsx-closing-bracket-location": [0],
+    "react/jsx-indent-props": [0],
+    "react/jsx-indent": [0],
+    "react/jsx-filename-extension": [0], # React Native doesn't support jsx file extensions
+    "react/no-unescaped-entities": [0], # Atom/esformatter doesn't suppoert HTML character entities
+    "react/forbid-prop-types": [2, { "forbid": [any] }]
+  }
+}

@@ -1,26 +1,101 @@
 // Imports
-import { Button, Card, Toolbar, Divider } from 'react-native-material-design';
+import { Button, Toolbar, Divider, Subheader } from 'react-native-material-design';
 import React, { Component } from 'react';
-import {
-  AppRegistry,
-  StyleSheet,
-  Text,
-  View,
-  ScrollView
-} from 'react-native';
-var ButtonModal  = require('react-native-button');
-var Modal   = require('react-native-modalbox');
-var Slider  = require('react-native-slider');
-var window  = require('Dimensions').get('window');
+import { AppRegistry, StyleSheet, Text, View, AsyncStorage } from 'react-native';
+import Storage from 'react-native-storage';
+
+// const ButtonModal = require('react-native-button');
+const Modal = require('react-native-modalbox');
+const Slider = require('react-native-slider');
+// const window = require('Dimensions').get('window');
+
+const styles = StyleSheet.create({
+
+  wrapper: {
+    paddingTop: 50,
+    flex: 1,
+  },
+  modal: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modal3: {
+    height: 450,
+    width: 300,
+    paddingTop: 50,
+  },
+  btn: {
+    margin: 10,
+    backgroundColor: '#3B5998',
+    color: 'white',
+    padding: 10,
+  },
+  btnModal: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    width: 50,
+    height: 50,
+    backgroundColor: 'transparent',
+  },
+  text: {
+    color: 'black',
+    fontSize: 22,
+  },
+  container: {
+    flex: 1,
+    paddingTop: 80,
+    backgroundColor: '#F5FCFF',
+    flexDirection: 'column',
+  },
+  buttons: {
+    flex: 1,
+    alignItems: 'center',
+  },
+});
 
 
 export default class Flicky extends Component {
 
+  static createSlider(val, callback) {
+    return (<Slider
+      trackStyle={{ marginTop: -4,
+      backgroundColor: '#71ccff' }}
+            thumbStyle={{ backgroundColor: '#3d3d3d' }}
+            minimumTrackTintColor="#1073ff"
+            style={{ width: 230 }}
+            value={val}
+            onValueChange={callback} />);
+  }
+
   constructor(props) {
     super(props);
     this.openModal3 = this.openModal3.bind(this);
+    this.componentWillMount = this.componentWillMount.bind(this);
+    this.onSliderValueUpChange = this.onSliderValueUpChange.bind(this);
+    this.onSliderValueDownChange = this.onSliderValueDownChange.bind(this);
+    this.onSliderValueLeftChange = this.onSliderValueLeftChange.bind(this);
+    this.onSliderValueRightChange = this.onSliderValueRightChange.bind(this);
+    this.onSliderValueForwardChange =
+    this.onSliderValueForwardChange.bind(this);
+    this.onSliderValueBackwardChange =
+    this.onSliderValueBackwardChange.bind(this);
+
+    this.storage = new Storage({
+      size: 1000,
+      storageBackend: AsyncStorage,
+      defaultExpires: null,
+      enableCache: true,
+      // if data was not found in storage or expired,
+      // the corresponding sync method will be invoked and return
+      // the latest data.
+      sync: {
+        // we'll talk about the details later.
+      },
+    });
 
     this.state = {
+
       isOpen: false,
       isDisabled: false,
       swipeToClose: false,
@@ -32,148 +107,233 @@ export default class Flicky extends Component {
       sliderValueRight: 0.3,
       appUp: 'upper',
       appDown: 'downer',
-      appForward: "forwarder",
-      appBackward: "backwarder",
-      appLeft: "lefter",
-      appRight: "Righter"
+      appForward: 'forwarder',
+      appBackward: 'backwarder',
+      appLeft: 'lefter',
+      appRight: 'righter'
     };
   }
 
-  openModal3(id) {
-    this.refs.modal3.open();
+  componentWillMount() {
+    try {
+      this.storage.load({
+        key: 'customData',
+        id: '1'
+      }).then((ret) => {
+      this.setState({
+        sliderValueUp: ret.sliderData.sliderValueUp,
+        sliderValueDown: ret.sliderData.sliderValueDown,
+        sliderValueLeft: ret.sliderData.sliderValueLeft,
+        sliderValueRight: ret.sliderData.sliderValueRight,
+        sliderValueBackward: ret.sliderData.sliderValueBackward,
+        sliderValueForward: ret.sliderData.sliderValueForward,
+        appUp: ret.appChoiceData.appUp,
+        appDown: ret.appChoiceData.appDown,
+        appLeft: ret.appChoiceData.appLeft,
+        appRight: ret.appChoiceData.appRight,
+        appForward: ret.appChoiceData.appForward,
+        appBackward: ret.appChoiceData.appBackward
+      });
+      });
+    } catch (err) {
+      // console.log(err);
+    }
+  }
+
+  componentWillUpdate(newProps, newState) {
+    const customData = {
+      sliderData: {
+        sliderValueUp: this.state.sliderValueUp,
+        sliderValueDown: this.state.sliderValueDown,
+        sliderValueForward: this.state.sliderValueForward,
+        sliderValueBackward: this.state.sliderValueBackward,
+        sliderValueLeft: this.state.sliderValueLeft,
+        sliderValueRight: this.state.sliderValueRight
+      },
+      appChoiceData: {
+        appUp: this.state.appUp,
+        appDown: this.state.appDown,
+        appForward: this.state.appForward,
+        appBackward: this.state.appBackward,
+        appLeft: this.state.appLeft,
+        appRight: this.state.appRight
+      }
+    };
+
+    this.storage.save({
+      key: 'customData',
+      id: '1',
+      rawData: customData,
+      expires: null,
+    });
+  }
+
+  onSliderValueUpChange(value) {
+    this.setState({ sliderValueUp: value });
+  }
+
+  onSliderValueDownChange(value) {
+    this.setState({ sliderValueDown: value });
+  }
+
+  onSliderValueLeftChange(value) {
+    this.setState({ sliderValueLeft: value });
+  }
+
+  onSliderValueRightChange(value) {
+    this.setState({ sliderValueRight: value });
+  }
+
+  onSliderValueForwardChange(value) {
+    this.setState({ sliderValueForward: value });
+  }
+
+  onSliderValueBackwardChange(value) {
+    this.setState({ sliderValueBackward: value });
+  }
+
+  openModal3() {
+    this.setState({ isOpen: !this.state.isOpen });
   }
 
   toggleDisable() {
-    this.setState({isDisabled: !this.state.isDisabled});
+    this.setState({ isDisabled: !this.state.isDisabled });
   }
 
   toggleSwipeToClose() {
-    this.setState({swipeToClose: !this.state.swipeToClose});
+    this.setState({ swipeToClose: !this.state.swipeToClose });
   }
 
-  onClose() {
-    console.log('Modal just closed');
-  }
-
-  onOpen() {
-    console.log('Modal just openned');
-  }
-
-  onClosingState(state) {
-    console.log('the open/close of the swipeToClose just changed');
-  }
-
-  renderList() {
-    var list = [];
-
-    for (var i=0;i<50;i++) {
-      list.push(<Text style={styles.text} key={i}>Elem {i}</Text>);
-    }
-
-    return list;
-  }
 
   render() {
     return (
       <View style={styles.container}>
-        <Toolbar
-          leftElement="arrow-back"
-          centerElement="Title"
-          rightElement={<Text>You can put here whatever you want</Text>}
-        />
-        <Button text="Sensitivity" style={styles.buttons} value="Sensitivity" onPress={this.openModal3} />
+        <Toolbar leftElement="arrow-back"
+                 centerElement="Title"
+                 rightElement={<Text>
+                                 You can put here whatever you want
+                               </Text>}>
+          <Text style={{ flex: 1,
+            textAlign: 'center',
+            fontSize: 25,
+            color: 'white' }}>
+            Flicky
+          </Text>
+        </Toolbar>
+        <Button text="Sensitivity"
+                style={styles.buttons}
+                value="Sensitivity"
+                onPress={this.openModal3} />
         <Divider />
-        <Button text="Direction Customization" style={styles.buttons} value="Direction Customization" onPress={()=> console.log("I pressed a flat button")} />
-
-        <View style={{flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'flex-end', backgroundColor: 'green', paddingBottom: 20}}><Text style={{textAlign: 'center', backgroundColor: 'yellow'}}>Up</Text></View>
-        <View style={{flex: 2, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', height: 20, backgroundColor: 'orange'}}>
-          <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-            <Text style={{backgroundColor:'red'}}>Left</Text>
+        <View style={{ justifyContent: 'center', alignItems: 'center', }}>
+          <Subheader text="Direction Customization" />
+        </View>
+        <View style={{ flex: 1,
+          flexDirection: 'row',
+          justifyContent: 'center',
+          alignItems: 'flex-end',
+          paddingBottom: 20 }}>
+          <Button text="Up"
+                  style={styles.buttons}
+                  value="Up" />
+        </View>
+        <View style={{ flex: 2,
+          flexDirection: 'row',
+          justifyContent: 'center',
+          alignItems: 'center',
+          height: 20 }}>
+          <View style={{ flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center' }}>
+            <Button text="Left"
+                    style={styles.buttons}
+                    value="Left" />
           </View>
-          <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-            <View style={{paddingBottom: 20}}>
-              <Text style={{backgroundColor:'red'}}>Forward</Text>
+          <View style={{ flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center' }}>
+            <View style={{ paddingBottom: 20 }}>
+              <Button text="Forward"
+                      style={styles.buttons}
+                      value="Forward" />
             </View>
-            <View style={{paddingTop: 20}}>
-              <Text style={{backgroundColor:'red'}}>Backward</Text>
+            <View style={{ paddingTop: 20 }}>
+              <Button text="Backward"
+                      style={styles.buttons}
+                      value="Backward" />
             </View>
           </View>
-          <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-            <Text style={{backgroundColor:'red'}}>Right</Text>
+          <View style={{ flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center' }}>
+            <Button text="Right"
+                    style={styles.buttons}
+                    value="Right" />
           </View>
         </View>
-        <View style={{flex: 2, justifyContent: 'flex-start', alignItems: 'center', height: 20, backgroundColor: 'pink', paddingTop: 20}}><Text style={{backgroundColor: 'purple'}}>Down</Text></View>
-
-
-         <Modal style={[styles.modal, styles.modal3]} position={"center"} ref={"modal3"} isDisabled={this.state.isDisabled}>
-            <Text style={styles.text}>Up</Text>
-            <Slider trackStyle={{marginTop: -4, backgroundColor: '#71ccff'}} thumbStyle={{backgroundColor: '#3d3d3d'}} minimumTrackTintColor='#1073ff' style={{width: 230}} value={this.state.sliderValueUp} onValueChange={(value) => this.setState({sliderValueUp: value})} />
-
-            <Text style={styles.text}>Down</Text>
-            <Slider trackStyle={{marginTop: -4, backgroundColor: '#71ccff'}} thumbStyle={{backgroundColor: '#3d3d3d'}} minimumTrackTintColor='#1073ff' style={{width: 230}} value={this.state.sliderValueDown} onValueChange={(value) => this.setState({sliderValueDown: value})} />
-
-            <Text style={styles.text}>Forward</Text>
-            <Slider trackStyle={{marginTop: -4, backgroundColor: '#71ccff'}} thumbStyle={{backgroundColor: '#3d3d3d'}} minimumTrackTintColor='#1073ff' style={{width: 230}} value={this.state.sliderValueForward} onValueChange={(value) => this.setState({sliderValueForward: value})} />
-
-            <Text style={styles.text}>Backward</Text>
-            <Slider trackStyle={{marginTop: -4, backgroundColor: '#71ccff'}} thumbStyle={{backgroundColor: '#3d3d3d'}} minimumTrackTintColor='#1073ff' style={{width: 230}} value={this.state.sliderValueBackward} onValueChange={(value) => this.setState({sliderValueBackward: value})} />
-
-            <Text style={styles.text}>Left</Text>
-            <Slider trackStyle={{marginTop: -4, backgroundColor: '#71ccff'}} thumbStyle={{backgroundColor: '#3d3d3d'}} minimumTrackTintColor='#1073ff' style={{width: 230}} value={this.state.sliderValueLeft} onValueChange={(value) => this.setState({sliderValueLeft: value})} />
-
-            <Text style={styles.text}>Right</Text>
-            <Slider trackStyle={{marginTop: -4, backgroundColor: '#71ccff'}} thumbStyle={{backgroundColor: '#3d3d3d'}} minimumTrackTintColor='#1073ff' style={{width: 230}} value={this.state.sliderValueRight} onValueChange={(value) => this.setState({sliderValueRight: value})} />
-            <Button text="Disable" onPress={this.toggleDisable} style={styles.btn}>Disable ({this.state.isDisabled ? "true" : "false"})</Button>
-          </Modal>
+        <View style={{ flex: 3,
+          justifyContent: 'flex-start',
+          alignItems: 'center',
+          height: 20,
+          paddingTop: 20, }}>
+          <Button text="Down"
+                  style={styles.buttons}
+                  value="Down" />
+        </View>
+        <View style={{ flex: 1,
+          justifyContent: 'center',
+          alignItems: 'center',
+          height: 20,
+          paddingTop: 20, }}>
+          <Button text="Save"
+                  style={styles.buttons}
+                  value="Save" />
+        </View>
+        <Modal style={[styles.modal, styles.modal3]}
+               position={'center'}
+               isOpen={this.state.isOpen}
+               onClosed={this.openModal3}>
+          <Text style={styles.text}>
+            Up
+          </Text>
+            {Flicky.createSlider(this.state.sliderValueUp,
+              this.onSliderValueUpChange)}
+          <Text style={styles.text}>
+            Down
+          </Text>
+          {Flicky.createSlider(this.state.sliderValueDown,
+            this.onSliderValueDownChange)}
+          <Text style={styles.text}>
+            Forward
+          </Text>
+          {Flicky.createSlider(this.state.sliderValueForward,
+            this.onSliderValueForwardChange)}
+          <Text style={styles.text}>
+            Backward
+          </Text>
+          {Flicky.createSlider(this.state.sliderValueBackward,
+            this.onSliderValueBackwardChange)}
+          <Text style={styles.text}>
+            Left
+          </Text>
+          {Flicky.createSlider(this.state.sliderValueLeft,
+            this.onSliderValueLeftChange)}
+          <Text style={styles.text}>
+            Right
+          </Text>
+          {Flicky.createSlider(this.state.sliderValueRight,
+            this.onSliderValueRightChange)}
+          <Button text="Disable"
+                  onPress={this.toggleDisable}
+                  style={styles.btn}>
+            Disable (
+            {this.state.isDisabled ? 'true' : 'false'})
+          </Button>
+        </Modal>
       </View>
-    );
+      );
   }
-};
-
-var styles = StyleSheet.create({
-
-  wrapper: {
-    paddingTop: 50,
-    flex: 1
-  },
-  modal: {
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  modal3: {
-    height: 450,
-    width: 300,
-    paddingTop: 50
-  },
-  btn: {
-    margin: 10,
-    backgroundColor: "#3B5998",
-    color: "white",
-    padding: 10
-  },
-  btnModal: {
-    position: "absolute",
-    top: 0,
-    right: 0,
-    width: 50,
-    height: 50,
-    backgroundColor: "transparent"
-  },
-  text: {
-    color: "black",
-    fontSize: 22
-  },
-  container: {
-    flex: 1,
-    paddingTop: 80,
-    backgroundColor: '#F5FCFF',
-    flexDirection: 'column'
-  },
-  buttons: {
-    flex: 1,
-    alignItems: 'center'
-  }
-});
+}
 
 
 AppRegistry.registerComponent('Flicky', () => Flicky);
