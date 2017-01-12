@@ -1,5 +1,6 @@
 # Flicky-React-Native
 Added faster functionality to large format phones between switching apps. Used axis accelerometers to open di erent apps and utilities by bridging Android and iOS native code to Facebook’s React Native Framework. Allowed users to customize sensivity and app selection.
+<img src="https://raw.githubusercontent.com/bartchr808/Flicky-React-Native/master/App%20Screenshot.png" width="200px" height="auto" />
 
 ## Getting Started
 
