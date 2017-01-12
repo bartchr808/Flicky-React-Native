@@ -4,6 +4,8 @@ import React, { Component } from 'react';
 import { AppRegistry, StyleSheet, Text, View, AsyncStorage } from 'react-native';
 import Storage from 'react-native-storage';
 
+
+
 // const ButtonModal = require('react-native-button');
 const Modal = require('react-native-modalbox');
 const Slider = require('react-native-slider');
@@ -143,20 +145,20 @@ export default class Flicky extends Component {
   componentWillUpdate(newProps, newState) {
     const customData = {
       sliderData: {
-        sliderValueUp: this.state.sliderValueUp,
-        sliderValueDown: this.state.sliderValueDown,
-        sliderValueForward: this.state.sliderValueForward,
-        sliderValueBackward: this.state.sliderValueBackward,
-        sliderValueLeft: this.state.sliderValueLeft,
-        sliderValueRight: this.state.sliderValueRight
+        sliderValueUp: newState.sliderValueUp,
+        sliderValueDown: newState.sliderValueDown,
+        sliderValueForward: newState.sliderValueForward,
+        sliderValueBackward: newState.sliderValueBackward,
+        sliderValueLeft: newState.sliderValueLeft,
+        sliderValueRight: newState.sliderValueRight
       },
       appChoiceData: {
-        appUp: this.state.appUp,
-        appDown: this.state.appDown,
-        appForward: this.state.appForward,
-        appBackward: this.state.appBackward,
-        appLeft: this.state.appLeft,
-        appRight: this.state.appRight
+        appUp: newState.appUp,
+        appDown: newState.appDown,
+        appForward: newState.appForward,
+        appBackward: newState.appBackward,
+        appLeft: newState.appLeft,
+        appRight: newState.appRight
       }
     };
 
@@ -279,15 +281,6 @@ export default class Flicky extends Component {
           <Button text="Down"
                   style={styles.buttons}
                   value="Down" />
-        </View>
-        <View style={{ flex: 1,
-          justifyContent: 'center',
-          alignItems: 'center',
-          height: 20,
-          paddingTop: 20, }}>
-          <Button text="Save"
-                  style={styles.buttons}
-                  value="Save" />
         </View>
         <Modal style={[styles.modal, styles.modal3]}
                position={'center'}
