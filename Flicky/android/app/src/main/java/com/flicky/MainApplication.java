@@ -12,7 +12,7 @@ import com.facebook.react.shell.MainReactPackage;
 import java.util.Arrays;
 import java.util.List;
 
-import com.reactnativemoduletutorial.myapplist.MyAppListPackage;
+import com.flicky.myapplist.MyAppListPackage;
 
 public class MainApplication extends Application implements ReactApplication {
 

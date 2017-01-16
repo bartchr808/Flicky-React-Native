@@ -1,10 +1,10 @@
 // Imports
 import { Button, Toolbar, Divider, Subheader } from 'react-native-material-design';
 import React, { Component } from 'react';
-import { AppRegistry, StyleSheet, Text, View, AsyncStorage } from 'react-native';
+import { AppRegistry, StyleSheet, NativeModules, Text, View, AsyncStorage } from 'react-native';
 import Storage from 'react-native-storage';
 
-
+var AppList = NativeModules.MyAppList;
 
 // const ButtonModal = require('react-native-button');
 const Modal = require('react-native-modalbox');
