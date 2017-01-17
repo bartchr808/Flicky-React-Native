@@ -10,6 +10,7 @@ import java.util.Map;
 
 import android.media.MediaPlayer;
 import android.media.AudioManager;
+import android.util.Log;
 
 public class MyAppListModule extends ReactContextBaseJavaModule {
 
@@ -24,56 +25,9 @@ public class MyAppListModule extends ReactContextBaseJavaModule {
      return "MyAppList";
    }
 
-    @ReactMethod
-    public void preparePlayer(String url) {
-      try{
-        if (mediaPlayer != null) {
-          mediaPlayer.release();
-          mediaPlayer = null;
-        }
-        mediaPlayer = new MediaPlayer();
-        mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-        mediaPlayer.setDataSource(url);
-        mediaPlayer.setLooping(true);
-        mediaPlayer.prepareAsync();
-      }catch(Exception e){  }
-    }
 
     @ReactMethod
-    public void setOnPreparedCallback(Callback onPrepared){
-      final Callback onPreparedCallback = onPrepared;
-      try{
-        mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-          @Override
-          public void onPrepared(MediaPlayer player) {
-            try{
-              onPreparedCallback.invoke(mediaPlayer.getDuration());
-            }catch(Exception e){}
-          }
-        });
-      }catch(Exception e){}
+    public String play() {
+      return "Hey!";
     }
-
-    @ReactMethod
-    public void play() {
-      try{
-        if (mediaPlayer != null) {
-          if (!mediaPlayer.isPlaying()) {
-            mediaPlayer.start();
-          }
-        }
-      }catch(Exception e){}
-    }
-
-    @ReactMethod
-    public void pause(){
-      try{
-        if (mediaPlayer != null) {
-          if (mediaPlayer.isPlaying()) {
-            mediaPlayer.pause();
-          }
-        }
-      }catch(Exception e){}
-    }
-
 }

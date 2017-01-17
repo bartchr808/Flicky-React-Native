@@ -82,6 +82,7 @@ export default class Flicky extends Component {
     this.onSliderValueForwardChange.bind(this);
     this.onSliderValueBackwardChange =
     this.onSliderValueBackwardChange.bind(this);
+    this.printlog = this.printlog.bind(this);
 
     this.storage = new Storage({
       size: 1000,
@@ -206,6 +207,11 @@ export default class Flicky extends Component {
     this.setState({ swipeToClose: !this.state.swipeToClose });
   }
 
+  printlog() {
+    console.log(AppList.play());
+    console.log('??');
+  }
+
 
   render() {
     return (
@@ -257,7 +263,8 @@ export default class Flicky extends Component {
             <View style={{ paddingBottom: 20 }}>
               <Button text="Forward"
                       style={styles.buttons}
-                      value="Forward" />
+                      value="Forward"
+                      onPress={this.printlog} />
             </View>
             <View style={{ paddingTop: 20 }}>
               <Button text="Backward"
