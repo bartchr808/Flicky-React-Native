@@ -209,7 +209,7 @@ export default class Flicky extends Component {
 
   printlog() {
     //console.log(AppList.play());
-    AppList.isEqual(
+    AppList.inner.isEqual(
       5,
       10,
       (status) => {
