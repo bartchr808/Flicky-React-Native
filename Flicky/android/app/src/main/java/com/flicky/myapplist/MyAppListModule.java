@@ -40,7 +40,16 @@ public class MyAppListModule extends ReactContextBaseJavaModule {
      return "MyAppList";
    }
 
-  ClassExtender inner = new MyAppListModule().new ClassExtender();
+  //ClassExtender inner = new MyAppListModule().new ClassExtender();
+  //C
+  @ReactMethod
+   public void isEqual2(
+       int a,
+       int b,
+       Callback booleanCallback) {
+   boolean equal= a == b;
+   booleanCallback.invoke(equal);
+ }
 
   public class ClassExtender extends Activity implements SensorEventListener {
 
@@ -133,5 +142,13 @@ public class MyAppListModule extends ReactContextBaseJavaModule {
             }
         }
       }
+    }
+    // Accessing he inner class from the method within
+    @ReactMethod
+    public void display_Inner(int a,
+    int b,
+    Callback booleanCallback) {
+      ClassExtender extender = new ClassExtender();
+      extender.isEqual(a, b, booleanCallback);
     }
   }
