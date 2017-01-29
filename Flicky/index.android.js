@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import { AppRegistry, StyleSheet, NativeModules, Text, View, AsyncStorage } from 'react-native';
 import Storage from 'react-native-storage';
 
-var AppList = NativeModules.MyAppList;
+const AppList = NativeModules.MyAppList;
 
 // const ButtonModal = require('react-native-button');
 const Modal = require('react-native-modalbox');
@@ -208,7 +208,14 @@ export default class Flicky extends Component {
   }
 
   printlog() {
-    console.log(AppList.play());
+    //console.log(AppList.play());
+    AppList.isEqual(
+      5,
+      10,
+      (status) => {
+        console.log('Result ',status);
+      }
+    );
     console.log('??');
   }
 

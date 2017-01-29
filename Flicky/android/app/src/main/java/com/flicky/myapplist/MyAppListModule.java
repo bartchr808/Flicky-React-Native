@@ -14,11 +14,14 @@ import android.util.Log;
 
 public class MyAppListModule extends ReactContextBaseJavaModule {
 
+
   private static MediaPlayer mediaPlayer = null;
 
   public MyAppListModule(ReactApplicationContext reactContext) {
     super(reactContext);
   }
+
+
 
    @Override
    public String getName() {
@@ -26,8 +29,13 @@ public class MyAppListModule extends ReactContextBaseJavaModule {
    }
 
 
-    @ReactMethod
-    public String play() {
-      return "Hey!";
-    }
+   @ReactMethod
+    public void isEqual(
+        int a,
+        int b,
+        Callback booleanCallback) {
+    boolean equal= a == b;
+    booleanCallback.invoke(equal);
+  }
+
 }
