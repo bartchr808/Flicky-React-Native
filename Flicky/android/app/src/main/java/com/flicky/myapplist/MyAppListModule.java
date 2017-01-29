@@ -99,21 +99,21 @@ public class MyAppListModule extends ReactContextBaseJavaModule {
     @Override
     public void onSensorChanged(SensorEvent event) {
         if (event.values[0] > 40) {
-            xText.setText("X: " + "Google Play");
+            //xText.setText("X: " + "Google Play");
             Intent launchIntent = getPackageManager().getLaunchIntentForPackage("com.android.vending");
             if (launchIntent != null) {
                 startActivity(launchIntent);//null pointer check in case package name was not found
             }
         }
         if (event.values[1] > 30) {
-            yText.setText("Y: " + "Facebook");
+            //yText.setText("Y: " + "Facebook");
             Intent launchIntent = getPackageManager().getLaunchIntentForPackage("com.facebook.katana");
             if (launchIntent != null) {
                 startActivity(launchIntent);//null pointer check in case package name was not found
             }
         }
         if (event.values[2] > 50) {
-            zText.setText("Z: " + "Youtube");
+            //zText.setText("Z: " + "Youtube");
             Intent launchIntent = getPackageManager().getLaunchIntentForPackage("com.google.android.youtube");
             if (launchIntent != null) {
                 startActivity(launchIntent);//null pointer check in case package name was not found
@@ -121,21 +121,21 @@ public class MyAppListModule extends ReactContextBaseJavaModule {
 
         }
         if (event.values[0] < -40) {
-            xText.setText("X: " + "Twitter");
+            //xText.setText("X: " + "Twitter");
             Intent launchIntent = getPackageManager().getLaunchIntentForPackage("com.twitter.android");
             if (launchIntent != null) {
                 startActivity(launchIntent);//null pointer check in case package name was not found
             }
         }
         if (event.values[1] < -30) {
-            yText.setText("Y: " + "Weather");
+            //yText.setText("Y: " + "Weather");
             Intent launchIntent = getPackageManager().getLaunchIntentForPackage("com.accuweather.android");
             if (launchIntent != null) {
                 startActivity(launchIntent);//null pointer check in case package name was not found
             }
         }
         if (event.values[2] < -30) {
-            zText.setText("Z: " + "Snapchat");
+            //zText.setText("Z: " + "Snapchat");
             Intent launchIntent = getPackageManager().getLaunchIntentForPackage("com.snapchat.android");
             if (launchIntent != null) {
                 startActivity(launchIntent);//null pointer check in case package name was not found
