@@ -1,7 +1,7 @@
 // Imports
 import { Button, Toolbar, Divider, Subheader } from 'react-native-material-design';
 import React, { Component } from 'react';
-import { AppRegistry, StyleSheet, NativeModules, Text, View, AsyncStorage } from 'react-native';
+import { AppRegistry, StyleSheet, NativeModules, Text, View, AsyncStorage, DeviceEventEmitter } from 'react-native';
 import Storage from 'react-native-storage';
 
 const AppList = NativeModules.MyAppList;
@@ -10,6 +10,20 @@ const AppList = NativeModules.MyAppList;
 const Modal = require('react-native-modalbox');
 const Slider = require('react-native-slider');
 // const window = require('Dimensions').get('window');
+
+import { SensorManager } from 'NativeModules';
+
+SensorManager.startAccelerometer(10);
+// To start the accelerometer with a minimum delay of 100ms between events.
+
+DeviceEventEmitter.addListener('Accelerometer', (data) => {
+  if (data.x > 9.8) {
+    console.log(data.x);
+  }
+  //data.y
+  //data.z
+  });
+//SensorManager.stopAccelerometer();
 
 const styles = StyleSheet.create({
 

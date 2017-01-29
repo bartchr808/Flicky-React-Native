@@ -33,8 +33,6 @@ public class MyAppListModule extends ReactContextBaseJavaModule {
     super(reactContext);
   }
 
-
-
    @Override
    public String getName() {
      return "MyAppList";
@@ -50,6 +48,8 @@ public class MyAppListModule extends ReactContextBaseJavaModule {
    boolean equal= a == b;
    booleanCallback.invoke(equal);
  }
+
+ 
 
   public class ClassExtender extends Activity implements SensorEventListener {
 

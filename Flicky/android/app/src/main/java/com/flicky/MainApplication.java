@@ -14,6 +14,8 @@ import java.util.List;
 
 import com.flicky.myapplist.MyAppListPackage;
 
+import com.sensormanager.SensorManagerPackage;
+
 public class MainApplication extends Application implements ReactApplication {
 
   private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
@@ -26,7 +28,8 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-          new MyAppListPackage()
+          new MyAppListPackage(),
+          new SensorManagerPackage()
       );
     }
   };
