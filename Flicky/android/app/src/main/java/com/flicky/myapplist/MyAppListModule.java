@@ -54,7 +54,7 @@ public class MyAppListModule extends ReactContextBaseJavaModule {
  int b,
  Callback booleanCallback) {
   ClassExtender extender = new ClassExtender();
-  extender.display_Inner(a, b, booleanCallback);
+  // extender.display_Inner(a, b, booleanCallback);
   //booleanCallback.invoke(true);
  }
 
