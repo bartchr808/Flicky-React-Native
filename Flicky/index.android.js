@@ -11,20 +11,23 @@ const Modal = require('react-native-modalbox');
 const Slider = require('react-native-slider');
 // const window = require('Dimensions').get('window');
 
-import { SensorManager } from 'NativeModules';
 
-SensorManager.startAccelerometer(10);
+// SENSOR LIBRARY FOR REACT NATIVE ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//import { SensorManager } from 'NativeModules';
+
+//SensorManager.startAccelerometer(10);
 // To start the accelerometer with a minimum delay of 100ms between events.
 
-DeviceEventEmitter.addListener('Accelerometer', (data) => {
-  if (data.x > 9.8) {
-    console.log(data.x);
-  }
+//DeviceEventEmitter.addListener('Accelerometer', (data) => {
+//  if (data.x > 9.8) {
+//    console.log(data.x);
+//  }
   //data.y
   //data.z
-  });
+//  });
 //SensorManager.stopAccelerometer();
-
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//
 const styles = StyleSheet.create({
 
   wrapper: {
@@ -223,7 +226,9 @@ export default class Flicky extends Component {
 
   printlog() {
     //console.log(AppList.play());
-    AppList.display_Inner(
+    console.log(NativeModules);
+    console.log(AppList);
+    AppList.access_Inner(
       5,
       10,
       (status) => {
