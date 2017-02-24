@@ -49,15 +49,17 @@ public class MyAppListModule extends ReactContextBaseJavaModule {
    booleanCallback.invoke(equal);
  }
 
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// everything below this line is me trying to natively create accelerometer
+// functionality
  @ReactMethod
  public void access_Inner(int a,
  int b,
  Callback booleanCallback) {
   ClassExtender extender = new ClassExtender();
-  // extender.display_Inner(a, b, booleanCallback);
+  extender.display_Inner(a, b, booleanCallback);
   //booleanCallback.invoke(true);
  }
-
 
   public class ClassExtender extends Activity implements SensorEventListener {
 
@@ -74,6 +76,8 @@ public class MyAppListModule extends ReactContextBaseJavaModule {
         int b,
         Callback booleanCallback) {
           boolean equal= a == b;
+          Log.d("ClassExtender","I am here");
+          System.out.println("sdfadfsdfs");
           booleanCallback.invoke(equal);
         }
 
@@ -88,6 +92,7 @@ public class MyAppListModule extends ReactContextBaseJavaModule {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+      Log.d("Flicky","I am here");
       super.onCreate(savedInstanceState);
       //setContentView(R.layout.activity_main);
 

@@ -4,8 +4,8 @@ import React, { Component } from 'react';
 import { AppRegistry, StyleSheet, NativeModules, Text, View, AsyncStorage, DeviceEventEmitter } from 'react-native';
 import Storage from 'react-native-storage';
 
-// const AppList = NativeModules.MyAppList;
-// const F = NativeModules.Flicky1;
+const AppList = NativeModules.MyAppList;
+// const F = NativeModules.Flicky;
 
 // const ButtonModal = require('react-native-button');
 const Modal = require('react-native-modalbox');
@@ -13,21 +13,33 @@ const Slider = require('react-native-slider');
 // const window = require('Dimensions').get('window');
 
 
-// SENSOR LIBRARY FOR REACT NATIVE ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//import { SensorManager } from 'NativeModules';
+// SENSOR LIBRARY FOR REACT NATIVE ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+import { SensorManager } from 'NativeModules';
 
-//SensorManager.startAccelerometer(10);
-// To start the accelerometer with a minimum delay of 100ms between events.
+SensorManager.startAccelerometer(10);
+// To start the accelerometer with a minimum delay of 10ms between events.
 
-//DeviceEventEmitter.addListener('Accelerometer', (data) => {
-//  if (data.x > 9.8) {
-//    console.log(data.x);
-//  }
+DeviceEventEmitter.addListener('Accelerometer', (data) => {
+  if (data.x > 40) {
+    console.log("Google Play");
+  }
+  if (data.x < -40) {
+    console.log("Twitter");
+  }
+  if (data.y > 30) {
+    console.log("Facebook");
+  }
+  if (data.z > 50) {
+    console.log("Youtube");
+  }
+  if (data.z < -30) {
+    console.log("Snapchat");
+  }
   //data.y
   //data.z
-//  });
+  });
 //SensorManager.stopAccelerometer();
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //
 const styles = StyleSheet.create({
 
@@ -230,7 +242,7 @@ export default class Flicky extends Component {
     //console.log(NativeModules);
     //console.log(AppList);
     //AppList.access_Inner(
-    F.isEqual(
+    AppList.access_Inner(
       5,
       10,
       (status) => {
