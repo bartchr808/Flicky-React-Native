@@ -40,16 +40,3 @@ $ react-native run-ios
 ## To Do
 
 Fix some bugs in bridging the Android code for switching apps and accessing list of apps. Complete the iOS bridging. Publish to Google and Apple App stores.
-
-## Authors
-
-* **Bart Chrzaszcz**
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
-
-## Acknowledgments
-
-* Thanks to those who created the libraries mentioned above and those who have helped with debugging my code and figuring out how to bridge native code
-
